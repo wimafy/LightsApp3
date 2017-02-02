@@ -28,22 +28,87 @@ angular
         url: '/homepage',
         controller: 'HomepageCtrl as homepageCtrl',
         templateUrl: 'homepage/homepage.html',
+        resolve: {
+          auth: function($state, Users, Auth){
+            return Auth.$requireSignIn().catch(function(){
+              $state.go('login');
+            });
+          },
+          profile: function(Users, Auth){
+            return Auth.$requireSignIn().then(function(auth){
+              return Users.getProfile(auth.uid).$loaded();
+            });
+          }
+        }
 
       })
       .state('homepage.projects', {
         url: '/projects',
         templateUrl: 'homepage/projects.html',
-        controller: 'ProjectsCtrl as projectsCtrl'
+        controller: 'ProjectsCtrl as projectsCtrl',
+        resolve: {
+          auth: function($state, Users, Auth){
+            return Auth.$requireSignIn().catch(function(){
+              $state.go('login');
+            });
+          },
+          profile: function(Users, Auth){
+            return Auth.$requireSignIn().then(function(auth){
+              return Users.getProfile(auth.uid).$loaded();
+            });
+          }
+        }
       })
       .state('homepage.templates', {
         url: '/templates',
         templateUrl: 'homepage/templates.html',
-        controller: 'TemplatesCtrl as templatesCtrl'
+        controller: 'TemplatesCtrl as templatesCtrl',
+        resolve: {
+          auth: function($state, Users, Auth){
+            return Auth.$requireSignIn().catch(function(){
+              $state.go('login');
+            });
+          },
+          profile: function(Users, Auth){
+            return Auth.$requireSignIn().then(function(auth){
+              return Users.getProfile(auth.uid).$loaded();
+            });
+          }
+        }
       })
       .state('homepage.showplans', {
         url: '/showplans',
         templateUrl: 'homepage/showplans.html',
-        controller: ''
+        controller: '',
+        resolve: {
+          auth: function($state, Users, Auth){
+            return Auth.$requireSignIn().catch(function(){
+              $state.go('login');
+            });
+          },
+          profile: function(Users, Auth){
+            return Auth.$requireSignIn().then(function(auth){
+              return Users.getProfile(auth.uid).$loaded();
+            });
+          }
+        }
+      })
+      .state('profile', {
+        url: '/profile',
+        controller: 'ProfileCtrl as profileCtrl',
+        templateUrl: 'users/profile.html',
+        resolve: {
+          auth: function($state, Users, Auth){
+            return Auth.$requireSignIn().catch(function(){
+              $state.go('login');
+            });
+          },
+          profile: function(Users, Auth){
+            return Auth.$requireSignIn().then(function(auth){
+              return Users.getProfile(auth.uid).$loaded();
+            });
+          }
+        }
       })
 
     $urlRouterProvider.otherwise('/');

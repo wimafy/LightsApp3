@@ -27,7 +27,7 @@ angular.module('lightShowApp')
     ];
 
     homepageCtrl.logout = function(){
-      alert("got it");
+      //alert("got it");
         Auth.$signOut().then(function(){
           $state.go('login');
         });
